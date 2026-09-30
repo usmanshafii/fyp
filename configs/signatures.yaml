@@ -1,0 +1,140 @@
+# Per-band signature ranges (spec 3). Each range is sampled uniformly once per scene; slots that
+# point at the same group share one draw (e.g. every painted slot gets the same paint).
+#
+# Bands share geometry only (spec 7.2, training rule 4): every value below is drawn separately per
+# band, with no shared latent between LWIR temperatures, SWIR reflectances and RGB albedo, so the
+# student cannot learn a cross-band shortcut that real sensors do not have. The two exceptions are
+# geometric: the fraction of a propeller / rotor disc swept by blades (alpha) and cloud shapes.
+# Even SWIR self-emission of hot parts uses its own temperature draw from the LWIR ranges.
+#
+# Evidence levels (project rule):
+#   A directly observed in KAL imagery   B strongly inferred   C plausible assumption, used only
+#   because no reliable public data was found   D unknown.
+# The finish and markings are A (photos P3, P1); every numeric reflectance, temperature and
+# emissivity below is C: a physics-based modelling range, not a KAL measurement.
+
+rgb:
+  target:
+    groups:
+      paint:   {albedo: [0.03, 0.08], roughness: [0.3, 0.6], coat: [0.0, 0.5]}    # spec 3.1; finish A (P3), numbers C
+      white:   {albedo: [0.70, 0.85], roughness: [0.4, 0.6]}                       # spec 3.1; markings A (P1, P3)
+      engine:  {albedo: [0.25, 0.45], roughness: [0.3, 0.5], metallic: [0.6, 0.9]} # C: uncowled aluminium engine (P4)
+      exhaust: {albedo: [0.06, 0.15], roughness: [0.5, 0.8], metallic: [0.4, 0.7]} # C: sooted steel headers
+      dark:    {albedo: [0.02, 0.06], roughness: [0.3, 0.6]}                       # C: propeller, antennas
+      window:  {albedo: [0.02, 0.03], roughness: [0.02, 0.1]}                      # off on this airframe
+    slots:
+      skin: paint
+      control_surface: paint
+      fin: paint
+      fuselage: paint
+      tail_cone: paint
+      markings: white
+      decal: white
+      engine_region: engine
+      exhaust_outlet: exhaust
+      propeller: dark
+      propeller_disc: dark
+      antenna: dark
+      nose_window: window
+    propeller_disc_alpha: [0.15, 0.35]     # spec Phase 2 brief; blade coverage is geometry, reused by LWIR and SWIR
+  negatives:
+    bird:           {body: {albedo: [0.04, 0.45], roughness: [0.8, 1.0]}, wing: {same_as: body}}
+    kite:           {body: {albedo: [0.30, 0.85], roughness: [0.6, 0.9], saturated: true}, detail: {albedo: [0.02, 0.2], roughness: [0.5, 0.8]}}
+    light_aircraft: {body: {albedo: [0.50, 0.85], roughness: [0.3, 0.5], coat: [0.2, 0.6]}, hot: {albedo: [0.2, 0.4], roughness: [0.4, 0.6], metallic: [0.5, 0.9]}, disc: {albedo: [0.02, 0.06], roughness: [0.4, 0.6], alpha: [0.08, 0.25]}}
+    helicopter:     {body: {albedo: [0.04, 0.60], roughness: [0.4, 0.7], coat: [0.0, 0.4]}, hot: {albedo: [0.1, 0.3], roughness: [0.4, 0.6], metallic: [0.4, 0.8]}, disc: {albedo: [0.02, 0.06], roughness: [0.4, 0.6], alpha: [0.08, 0.22]}}
+    small_uav:      {body: {albedo: [0.03, 0.80], roughness: [0.3, 0.6]}, hot: {albedo: [0.1, 0.3], roughness: [0.3, 0.5], metallic: [0.5, 0.9]}, disc: {albedo: [0.02, 0.1], roughness: [0.4, 0.6], alpha: [0.10, 0.30]}}
+    warm_clutter:   {hot: {albedo: [0.10, 0.50], roughness: [0.6, 0.9]}}
+  environment:
+    ground:    {albedo: [0.25, 0.35], roughness: 0.9, tint: [0.12, 0.35]}          # spec; tint strength C
+    wall:      {albedo: [0.20, 0.55], roughness: [0.7, 0.9]}                       # C
+    roof:      {albedo: [0.10, 0.45], roughness: [0.6, 0.9]}                       # C
+
+lwir:
+  # Temperatures are offsets from ambient air, converted to 8-14 um radiance with Planck's law.
+  # A dT value may be a range, or a dict keyed by thermal state (day, crossover, night).
+  states: {day: day, dusk: crossover, night: night}      # spec 3.2: dusk = thermal crossover
+  target:
+    groups:
+      skin:      {dT: {day: [-1.0, 8.0], crossover: [-0.5, 0.5], night: [-2.0, 1.0]}, emissivity: [0.85, 0.95]}   # spec -2..+8 overall
+      engine:    {dT: {day: [60.0, 200.0], crossover: [60.0, 120.0], night: [60.0, 200.0]}, emissivity: [0.3, 0.9]} # spec; crossover = "cooler engine range"
+      exhaust:   {dT: [150.0, 450.0], emissivity: [0.3, 0.9]}                     # spec
+      tail_cone: {dT: [5.0, 30.0], emissivity: [0.85, 0.95]}                      # spec
+      propeller: {dT: [0.0, 5.0], emissivity: [0.85, 0.95]}                       # spec
+    slots:
+      skin: skin
+      control_surface: skin
+      fin: skin
+      fuselage: skin
+      markings: skin
+      decal: skin
+      antenna: skin
+      nose_window: skin
+      tail_cone: tail_cone
+      engine_region: engine
+      exhaust_outlet: exhaust
+      propeller: propeller
+      propeller_disc: propeller
+  negatives:                                             # spec 3.2 table; C beyond that
+    bird:           {body: {dT: [2.0, 15.0], emissivity: [0.95, 0.95]}, wing: {dT: [1.0, 8.0], emissivity: [0.95, 0.95]}}
+    kite:           {body: {dT: [-3.0, 3.0], emissivity: [0.85, 0.95]}, detail: {dT: [-2.0, 2.0], emissivity: [0.85, 0.95]}}
+    light_aircraft: {body: {dT: [-2.0, 6.0], emissivity: [0.80, 0.95]}, hot: {dT: [50.0, 250.0], emissivity: [0.5, 0.9]}, disc: {dT: [0.0, 5.0], emissivity: [0.85, 0.95]}}
+    helicopter:     {body: {dT: [-2.0, 8.0], emissivity: [0.80, 0.95]}, hot: {dT: [80.0, 300.0], emissivity: [0.5, 0.9]}, disc: {dT: [0.0, 5.0], emissivity: [0.85, 0.95]}}
+    small_uav:      {body: {dT: [0.0, 10.0], emissivity: [0.80, 0.95]}, hot: {dT: [10.0, 45.0], emissivity: [0.6, 0.9]}, disc: {dT: [0.0, 5.0], emissivity: [0.85, 0.95]}}
+    warm_clutter:   {hot: {dT: [15.0, 60.0], emissivity: [0.85, 0.97]}}
+  environment:
+    sky: {dT_horizon: [-7.0, -3.0], dT_zenith: [-55.0, -35.0], shape_deg: [8.0, 20.0]}   # spec: -5 K near horizon to -50 K high up; profile shape C
+    clouds: {dT: [-15.0, -2.0]}                                                          # spec: "clouds near air temperature"; C
+    ground: {dT: {day: [10.0, 40.0], crossover: [-2.0, 5.0], night: [-6.0, 1.0]}, emissivity: [0.90, 0.97], texture_dT: [1.0, 4.0]}   # spec day; C otherwise
+    wall:   {dT: {day: [0.0, 12.0], crossover: [-2.0, 4.0], night: [-3.0, 3.0]}, emissivity: [0.85, 0.95]}   # C
+    roof:   {dT: {day: [10.0, 40.0], crossover: [-2.0, 5.0], night: [-6.0, 1.0]}, emissivity: [0.85, 0.95]}  # spec day; C otherwise
+  # Surfaces with emissivity < 1 also reflect the environment. The spec's emission-only pass is
+  # kept (no lights, no bounces); the reflected term (1 - e) * L_env is added in the shader with
+  # L_env blended from the sky (normal up) to the ground (normal down).
+  reflection_term: true
+
+swir:
+  band_um: [0.9, 1.7]                                    # spec (typical InGaAs)
+  target:
+    groups:                                              # finish (roughness, coat) drawn independently of RGB
+      paint:   {reflectance: [0.03, 0.40], roughness: [0.3, 0.6], coat: [0.0, 0.5]}   # spec: carbon black stays dark, other blacks turn bright
+      white:   {reflectance: [0.50, 0.85], roughness: [0.4, 0.6]}                     # spec
+      engine:  {reflectance: [0.30, 0.80], roughness: [0.3, 0.5], metallic: [0.5, 0.9]}   # spec (lower when oxidised or sooted)
+      exhaust: {reflectance: [0.30, 0.80], roughness: [0.5, 0.8], metallic: [0.3, 0.7]}   # spec lists both engine slots at 0.3-0.8
+      dark:    {reflectance: [0.03, 0.30], roughness: [0.3, 0.6]}                     # C
+      window:  {reflectance: [0.03, 0.05], roughness: [0.02, 0.1]}
+    slots:
+      skin: paint
+      control_surface: paint
+      fin: paint
+      fuselage: paint
+      tail_cone: paint
+      markings: white
+      decal: white
+      engine_region: engine
+      exhaust_outlet: exhaust
+      propeller: dark
+      propeller_disc: dark
+      antenna: dark
+      nose_window: window
+  negatives:                                             # C
+    bird:           {body: {reflectance: [0.10, 0.50], roughness: [0.8, 1.0]}, wing: {same_as: body}}
+    kite:           {body: {reflectance: [0.30, 0.80], roughness: [0.6, 0.9]}, detail: {reflectance: [0.05, 0.30], roughness: [0.5, 0.8]}}
+    light_aircraft: {body: {reflectance: [0.40, 0.80], roughness: [0.3, 0.5], coat: [0.2, 0.6]}, hot: {reflectance: [0.2, 0.6], roughness: [0.4, 0.6], metallic: [0.5, 0.9]}, disc: {reflectance: [0.03, 0.2], roughness: [0.4, 0.6]}}
+    helicopter:     {body: {reflectance: [0.05, 0.60], roughness: [0.4, 0.7], coat: [0.0, 0.4]}, hot: {reflectance: [0.1, 0.5], roughness: [0.4, 0.6], metallic: [0.4, 0.8]}, disc: {reflectance: [0.03, 0.2], roughness: [0.4, 0.6]}}
+    small_uav:      {body: {reflectance: [0.05, 0.70], roughness: [0.3, 0.6]}, hot: {reflectance: [0.2, 0.6], roughness: [0.3, 0.5], metallic: [0.5, 0.9]}, disc: {reflectance: [0.03, 0.2], roughness: [0.4, 0.6]}}
+    warm_clutter:   {hot: {reflectance: [0.10, 0.50], roughness: [0.6, 0.9]}}
+  environment:
+    ground: {reflectance: [0.25, 0.50]}                  # spec vegetation 0.3-0.5; soils similar C
+    wall:   {reflectance: [0.20, 0.50]}                  # C
+    roof:   {reflectance: [0.10, 0.45]}                  # C
+    cloud_brightness: [0.25, 0.7]                        # C: own draw, not the RGB one (same range as sky.clouds.brightness)
+    cloud_brightness_scale: [1.0, 1.6]                   # C: clouds stay bright while the sky darkens
+  sky_divisor: [3.0, 30.0]                               # spec: sky strength 3-30x lower than the visible pass
+  night_airglow: [2.0e-5, 2.0e-4]                        # C: uniform nightglow, radiance in render units
+  hot_emission:                                          # spec: optional self-emission above ~250 C
+    enabled_prob: {day: 0.0, dusk: 0.5, night: 1.0}      # C
+    min_temp_c: 250.0
+    # temperature: an independent draw from the part's LWIR dT range (rule above), not the LWIR value
+    inband_solar_irradiance: 250.0                       # C: W/m2 in 0.9-1.7 um for a high sun
+    nishita_sun_units: 140.0                             # calib: Nishita sun-disc irradiance (render units) at 30-60 deg
+    # render radiance = Planck in-band radiance [W/m2/sr] * nishita_sun_units / inband_solar_irradiance

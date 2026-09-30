@@ -1,0 +1,111 @@
+{
+ "results": [
+  {
+   "azimuth": "toward_sun",
+   "elevation_deg": 3.0,
+   "mean": 16.894027709960938,
+   "top_row": 15.918573379516602,
+   "bottom_row": 13.724835395812988,
+   "max_second_diff_rel": 2.4555916752433404e-05,
+   "patch_cv_raw": 0.003447288414463401,
+   "patch_cv_detrended": 0.00010156460428195177,
+   "pass_noise": true,
+   "pass_smooth": true,
+   "near_zenith_info": false
+  },
+  {
+   "azimuth": "toward_sun",
+   "elevation_deg": 20.0,
+   "mean": 17.198650360107422,
+   "top_row": 18.823923110961914,
+   "bottom_row": 15.67224407196045,
+   "max_second_diff_rel": 9.548581874696538e-05,
+   "patch_cv_raw": 0.004018024541437626,
+   "patch_cv_detrended": 9.658706734649925e-06,
+   "pass_noise": true,
+   "pass_smooth": true,
+   "near_zenith_info": false
+  },
+  {
+   "azimuth": "toward_sun",
+   "elevation_deg": 45.0,
+   "mean": 6.815036773681641,
+   "top_row": 4.89986515045166,
+   "bottom_row": 9.317781448364258,
+   "max_second_diff_rel": 7.920421921880916e-05,
+   "patch_cv_raw": 0.01205456629395485,
+   "patch_cv_detrended": 0.00029454627923233855,
+   "pass_noise": true,
+   "pass_smooth": true,
+   "near_zenith_info": false
+  },
+  {
+   "azimuth": "toward_sun",
+   "elevation_deg": 60.0,
+   "mean": 2.635457754135132,
+   "top_row": 2.2167105674743652,
+   "bottom_row": 3.166400909423828,
+   "max_second_diff_rel": 2.1530840967898257e-05,
+   "patch_cv_raw": 0.006461467128247023,
+   "patch_cv_detrended": 0.00016169866013184667,
+   "pass_noise": true,
+   "pass_smooth": true,
+   "near_zenith_info": false
+  },
+  {
+   "azimuth": "away_from_sun",
+   "elevation_deg": 3.0,
+   "mean": 6.1406636238098145,
+   "top_row": 6.328999996185303,
+   "bottom_row": 3.2782623767852783,
+   "max_second_diff_rel": 1.4753952200408094e-05,
+   "patch_cv_raw": 0.0038911085575819016,
+   "patch_cv_detrended": 0.000565650550739942,
+   "pass_noise": true,
+   "pass_smooth": true,
+   "near_zenith_info": false
+  },
+  {
+   "azimuth": "away_from_sun",
+   "elevation_deg": 20.0,
+   "mean": 3.0793395042419434,
+   "top_row": 2.545067310333252,
+   "bottom_row": 3.7310218811035156,
+   "max_second_diff_rel": 4.800364422408165e-06,
+   "patch_cv_raw": 0.006920997053384781,
+   "patch_cv_detrended": 3.932414582215782e-05,
+   "pass_noise": true,
+   "pass_smooth": true,
+   "near_zenith_info": false
+  },
+  {
+   "azimuth": "away_from_sun",
+   "elevation_deg": 45.0,
+   "mean": 1.281226634979248,
+   "top_row": 1.1716539859771729,
+   "bottom_row": 1.4106037616729736,
+   "max_second_diff_rel": 3.3495514344394905e-06,
+   "patch_cv_raw": 0.003357792040333152,
+   "patch_cv_detrended": 4.512197017077456e-05,
+   "pass_noise": true,
+   "pass_smooth": true,
+   "near_zenith_info": false
+  },
+  {
+   "azimuth": "away_from_sun",
+   "elevation_deg": 60.0,
+   "mean": 1.0070699453353882,
+   "top_row": 0.9782270193099976,
+   "bottom_row": 1.0474498271942139,
+   "max_second_diff_rel": 2.6041927867481718e-06,
+   "patch_cv_raw": 0.0012280507944524288,
+   "patch_cv_detrended": 4.966486449699353e-05,
+   "pass_noise": true,
+   "pass_smooth": true,
+   "near_zenith_info": false
+  }
+ ],
+ "horizon_brighter_than_zenith": true,
+ "brighter_toward_sun": true,
+ "all_pass": true
+}

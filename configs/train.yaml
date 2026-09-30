@@ -1,0 +1,60 @@
+# Detector, training and evaluation settings (spec 7-8).
+
+classes: [target, bird, kite, light_aircraft, helicopter, small_uav, warm_clutter]   # spec 6 class ids 0-6
+
+models:                                  # spec 8: models compared on identical test scenes
+  rgb_only:  {bands: [rgb]}
+  lwir_only: {bands: [lwir]}
+  rgb_lwir:  {bands: [rgb, lwir]}        # the baseline the student must beat
+  teacher:   {bands: [rgb, lwir, swir]}  # SWIR is training-only privileged information
+  student:   {bands: [rgb, lwir], distill_from: teacher}
+
+detector:
+  width: [16, 32, 64, 128, 256]          # channels at strides 2, 4, 8, 16, 32 (YOLOv8n-sized)
+  depth: [1, 2, 2, 1]                    # C2f repeats: stems, stride 8, 16, 32
+  p2_head: true                          # spec 7: run once with false to document the stride gap
+  se_weighting: false                    # spec 7 optional
+  modality_dropout: 0.15                 # spec 7 low-cost addition
+
+train:
+  epochs: 120
+  batch: 8
+  lr: 0.002
+  weight_decay: 0.05
+  warmup_epochs: 3
+  ema_decay: 0.9998
+  grad_clip: 10.0
+  workers: 2
+  cache_layers: 0                        # decoded scene-band layer sets cached per worker (0 = off; ~5-10 MB each)
+  eval_every: 5
+  seed: 0
+  device: auto                           # auto | cpu | cuda
+  augment:
+    hflip: 0.5
+    scale: [0.75, 1.6]                   # spec 7: scale-down capped by min_obj_px, scale-up allowed
+    scale_prob: 0.5
+    min_obj_px: 1.5
+  use_blur_box: false                    # train on the mid-exposure box (true: motion-blur union)
+
+loss: {w_cls: 0.5, w_box: 7.5, w_nwd: 2.0, tiny_px: 16.0, nwd_C: 12.8, topk: 10, near_k: 4}
+
+distill:
+  lambda: 1.0
+  temperature: 2.0
+  box_weight: 1.0
+  score_thresh: 0.1
+
+eval:
+  conf: 0.001                            # detections kept for AP
+  score_thresh: 0.3                      # operating point for precision / recall / FPPI / Pd
+  nms_iou: 0.5
+  nms_centre_px: 2.0
+  max_det: 100
+  iou_thresholds: [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]
+  centre_match: {abs_px: 2.0, rel: 0.5}  # spec 7: tiny-box match, centre within max(2 px, 0.5 x size)
+  nwd_match: {C: 12.8, thresh: 0.8}      # NWD >= 0.8 with C = 12.8 px (Xu et al. 2022) ~ 2.9 px tolerance
+  negative_match_iou: 0.1                # a false target detection on a hard negative is charged to its class
+  tiny_bins: ["2-4", "4-8", "8-16"]      # spec 7: report centre / NWD matching alongside AP50 here
+  bootstrap: 1000
+  pd_size_edges_px: [2, 2.8, 4, 5.7, 8, 11.3, 16, 22.6, 32, 45.3, 64, 90.5, 128, 256]
+  span_range_m: [2.00, 2.60]             # target.yaml: pixel size -> range band

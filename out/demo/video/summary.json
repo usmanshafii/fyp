@@ -1,0 +1,57 @@
+{
+ "video": "C:\\Users\\usman_pyywgw5\\Downloads\\fyp\\out\\demo\\video\\kal_detection_demo.mp4",
+ "web": "C:\\Users\\usman_pyywgw5\\Downloads\\fyp\\out\\demo\\video\\kal_detection_demo_web.mp4",
+ "clips": [
+  {
+   "clip": "day",
+   "mp4": "C:\\Users\\usman_pyywgw5\\Downloads\\fyp\\out\\demo\\video\\kal_demo_day.mp4",
+   "frames": 200,
+   "detected": 200,
+   "median_score": 148.8,
+   "range_m": [
+    1092.6013771263304,
+    713.3470462507227
+   ],
+   "agl_m": 161.74786673612408,
+   "speed_kmh": 180.0,
+   "size_px": [
+    7.123456104129133,
+    10.896044828434924
+   ]
+  },
+  {
+   "clip": "dusk",
+   "mp4": "C:\\Users\\usman_pyywgw5\\Downloads\\fyp\\out\\demo\\video\\kal_demo_dusk.mp4",
+   "frames": 200,
+   "detected": 200,
+   "median_score": 148.1,
+   "range_m": [
+    1092.6060715515318,
+    713.339927863737
+   ],
+   "agl_m": 161.06076799887347,
+   "speed_kmh": 180.0,
+   "size_px": [
+    7.00360745640873,
+    10.628343688356495
+   ]
+  },
+  {
+   "clip": "night",
+   "mp4": "C:\\Users\\usman_pyywgw5\\Downloads\\fyp\\out\\demo\\video\\kal_demo_night.mp4",
+   "frames": 200,
+   "detected": 200,
+   "median_score": 148.0,
+   "range_m": [
+    1092.6060715515318,
+    713.339927863737
+   ],
+   "agl_m": 161.26450112593855,
+   "speed_kmh": 180.0,
+   "size_px": [
+    7.664874031066148,
+    11.676422516996013
+   ]
+  }
+ ]
+}

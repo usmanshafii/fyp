@@ -1,0 +1,8 @@
+numpy<2
+pyyaml
+scipy
+matplotlib
+pillow
+pytest
+# Blender: either Blender 4.2+ (run scripts with `blender -b -P ...`),
+# or the bpy module on Python 3.11:  pip install bpy==4.2.0

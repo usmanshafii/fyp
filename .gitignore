@@ -1,0 +1,80 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.venv/
+venv/
+ENV/
+env/
+
+# Bulk data and heavy artefacts (regenerable); small results under out/ (json, png, logs) are kept
+out/**/tmp/
+tmp/
+.pytest_cache/
+*.npz
+*.npy
+!thermal/cache/*.npy
+*.pkl
+*.pickle
+*.pt
+*.pth
+*.ckpt
+*.onnx
+out/**/*.blend
+
+# Videos and media
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.flv
+*.wmv
+*.webm
+*.m4v
+
+# Large images and renders
+*.exr
+*.hdr
+
+# Blender
+*.blend1
+*.blend2
+*.blend~
+.blender_startup/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.project
+.pydevproject
+
+# OS
+Thumbs.db
+.cache/
+
+# Local overrides
+.env
+.env.local
+*.local.json

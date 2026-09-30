@@ -1,0 +1,102 @@
+# KAL target geometry: the single source of truth for build_target(), the variant
+# sampler, the reference drawing and the photo acceptance check.
+#
+# Units: lengths are fractions of the WINGSPAN unless the key says otherwise
+#   *_over_root      fraction of the root chord
+#   *_over_forebody  fraction of the forebody diameter
+#   *_deg            degrees
+# span_m converts everything to metres.
+#
+# Entries with `range` are sampled uniformly by the variant sampler. The range is
+# the measurement uncertainty from the photos, kept wide where the photos disagree,
+# so the detector trains across the plausible real shape instead of one guess.
+#
+# Evidence keys (docs/reference/photos/):
+#   P1 promotional render, oblique from above (layout, stations, details; its
+#      fuselage is ~35% slimmer than the flying article, so no diameters from it)
+#   P2 3/4 view on the launch vehicle at sunset (length, fins, probe, antennas)
+#   P3 exhibition close-up of the upper surface (finish, markings)
+#   P4 underside close-up on the launcher (engine, exhaust headers, lower fins)
+#   P5 elevated view on the launch vehicle, low resolution (absolute length)
+#   P6, P7 flight silhouettes from below (planform ratios, forebody/span)
+#   P8 near-axial rear view on the launcher (fin heights and split vs span, engine
+#      width, elevon break, lettering orientation); fins and span at one depth
+
+span_m: {default: 2.30, range: [2.00, 2.60], source: "not published; P5 length 3.1-3.5 m and P2 forebody 0.30-0.34 m against a Toyota Hilux"}
+
+planform:
+  root_chord:     {default: 1.00, range: [0.90, 1.12], source: "not observable in any single photo; P5 length / P6 forebody ratio"}
+  tip_over_root:  {default: 0.17, range: [0.13, 0.21], source: "P1 0.20, P6 0.19, P7 0.11 (banked, low weight)"}
+  nose_over_root: {default: 0.27, range: [0.23, 0.30], source: "nose tip ahead of the wing apex: P1 0.26, P6 0.29, P7 0.24"}
+  le_sweep_limits_deg: [54.0, 63.0]     # derived sweep must fall inside; otherwise the variant is resampled
+  wing_tc:        {default: 0.06, range: [0.04, 0.09], source: "not visible; thin enough that the fuselage stands proud on both sides (P1, P3, P4)"}
+  wing_z:         {default: 0.00, range: [-0.015, 0.015], source: "mid-wing: fuselage protrudes above (P1, P3) and below (P4)"}
+
+control_surfaces:
+  elevon_chord_over_root: {default: 0.09, range: [0.07, 0.11], source: "P1"}
+  elevon_breaks:  [0.085, 0.285, 0.50]  # y stations: inner panel 0.085-0.285, outer 0.285-tip (P1; P8 break at 0.29)
+
+fuselage:
+  forebody_dia:            {default: 0.140, range: [0.125, 0.155], source: "P6 13/89 px, P7 15/100 px"}
+  dome_len_over_forebody:  {default: 0.90, range: [0.70, 1.10], source: "blunt ellipsoidal nose, P1 P2 P6"}
+  tube_over_forebody:      {default: 0.72, range: [0.64, 0.80], source: "P1: body steps down behind the collar"}
+  pod_over_forebody:       {default: 0.92, range: [0.85, 1.00], source: "P1; P4 pod slightly narrower than the engine"}
+  neck_over_forebody:      {default: 0.45, range: [0.38, 0.55], source: "P1"}
+  pod_start_over_root:     {default: 0.60, range: [0.56, 0.64], source: "P1"}
+  pod_max_over_root:       {default: 0.73, range: [0.69, 0.77], source: "P1"}
+  neck_over_root:          {default: 0.92, range: [0.89, 0.95], source: "P1"}
+  collar_step_len:  0.015   # forebody-to-tube taper, starts where the leading edge meets the forebody
+  band_width:       0.020   # white band, ends 0.01 ahead of the collar (P1)
+
+tip_fins:           # plates centred on the wing tips; TE a straight line through the wing TE (P2, P4)
+  fin_up_height:    {default: 0.150, range: [0.12, 0.17], source: "P8 0.15-0.16 (span and fins at one depth); P2 with nose-nearer perspective"}
+  fin_down_height:  {default: 0.150, range: [0.12, 0.18], source: "P8 0.14-0.16, split about even; P2, P1 suggest slightly more below"}
+  fin_root_chord:   {default: 0.125, range: [0.10, 0.15], source: "P2; must not exceed the wing tip chord"}
+  fin_tip_chord:    {default: 0.035, range: [0.02, 0.05], source: "P2 narrow top and bottom edges"}
+  fin_te_rake_deg:  {default: 0.0, range: [-8.0, 8.0], source: "P2: TE within a few degrees of perpendicular; + tilts the top forward"}
+  fin_thickness:    0.010
+
+engine:             # exposed flat-twin, cylinders sideways, headers curving down and aft (P4, P1)
+  engine_start_over_root: {default: 0.96, range: [0.93, 1.00], source: "P1"}
+  engine_len_over_root:   {default: 0.10, range: [0.08, 0.12], source: "P1"}
+  engine_width:     {default: 0.140, range: [0.12, 0.16], source: "P4 heads just outboard of the pod; P8 envelope 0.14-0.16"}
+  engine_height:    {default: 0.085, range: [0.07, 0.10], source: "P1, P4, approximate"}
+  cylinder_dia:     0.045
+  head_dia:         0.058   # finned head, modelled as a larger-radius cylinder
+  header_dia:       0.016   # exhaust header pipes, one per cylinder (P4)
+  outlet_drop:      0.045   # outlets sit this far below the axis, aft of the engine (P4, low confidence)
+  hub_aft_te_over_root: {default: 0.085, range: [0.05, 0.12], source: "P1"}
+
+propeller:
+  prop_dia:         {default: 0.28, range: [0.24, 0.33], source: "P1 blade near span-parallel 0.25; P6 >= 0.22 visible below the TE"}
+  blade_root_chord: 0.035
+  blade_tip_chord:  0.020
+  blade_pitch_deg:  20.0
+  spinner_len:      0.030   # bullet-shaped hub at the centre of the prop blur (P4)
+  spinner_dia:      0.030
+  prop_mode:        disc    # disc | blades | both ; RGB uses a translucent disc for motion blur
+
+nose_details:       # visible in P2 on the flying article; the P1 render omits them
+  probe_len:        0.040
+  probe_dia:        0.006
+  antenna_x_from_nose: [0.060, 0.090]   # two blades on the upper dome/forebody
+  antenna_height:   0.030
+  antenna_chord:    0.020
+  antenna_rake_deg: 30.0
+  nose_window:      false   # not seen on this article; keep off
+
+markings:           # decal quads with UVs 0..1; textures from tools/make_decals.py
+  wing_text_center_over_root: 0.55      # "KAL" on both upper wing panels (P1, P3)
+  wing_text_y:      0.24
+  wing_text_size:   [0.14, 0.045]       # length along y, height along x
+  fin_text:         true                # wordmark on both fin outer faces (P1)
+  flag_x_over_root: -0.06               # small flag decal on the upper forebody (P1)
+  flag_size:        [0.050, 0.034]
+
+mesh:
+  fuselage_segments: 24
+  airfoil_points:    10     # per surface, cosine spaced, hinge line inserted
+  prop_disc_segments: 32
+
+variants:
+  seed: 20260924    # variant i uses its own stream seeded by (seed, i)

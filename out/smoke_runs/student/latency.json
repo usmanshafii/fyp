@@ -1,0 +1,19 @@
+{
+ "bands": [
+  "rgb",
+  "lwir"
+ ],
+ "params_m": 5.583804,
+ "threads": 4,
+ "torch_cpu": {
+  "mean_ms": 319.571829988854,
+  "p50_ms": 320.59754998772405,
+  "p90_ms": 323.6132399935741
+ },
+ "onnx": "out/smoke_runs/student\\model.onnx",
+ "onnxruntime_cpu": {
+  "mean_ms": 161.55842000734992,
+  "p50_ms": 160.7998000108637,
+  "p90_ms": 167.62317002285272
+ }
+}

@@ -1,0 +1,63 @@
+# Sensor profile (spec 5) and per-band sensor models applied in the data loader (spec 3, 4).
+# Every value here is a generic sensor modelling range, not a property of any fielded KAL system.
+#   [spec] fixed by the build spec   [C] plausible modelling assumption   [calib] tied to render units
+
+image: {width: 640, height: 512}       # [spec] RGB, LWIR and SWIR share one 640x512 grid
+sensor_width_mm: 36.0                  # [spec] Blender camera, sensor fit horizontal
+hfov_deg: [50.0, 10.0]                 # [spec] wide and narrow
+hfov_probs: [0.5, 0.5]                 # [C]
+fps: [25, 30]                          # [spec]
+
+psf_sigma_px:                          # [spec 4.1] Gaussian PSF sigma in OUTPUT pixels
+  rgb:  [0.3, 0.6]
+  swir: [0.4, 0.7]
+  lwir: [0.4, 0.9]
+# The lower edge of each range is applied at supersampled resolution during rendering (keeps
+# sub-pixel position); the loader adds sqrt(sigma^2 - sigma0^2) at output resolution so every
+# epoch sees a fresh PSF inside the spec range.
+
+exposure_ms: {day: [1.0, 5.0], dusk: [5.0, 20.0], night: [20.0, 50.0]}   # [C] spec examples: 5 ms day, 50 ms night
+
+registration:                          # [spec 4.6] LWIR vs RGB 0-2 px, 0-1 deg; SWIR the same [C]
+  lwir: {shift_px: 2.0, rot_deg: 1.0}
+  swir: {shift_px: 2.0, rot_deg: 1.0}
+
+rgb_noise:                             # Brooks et al. (CVPR 2019) style: shot + read noise on linear data, before tone mapping
+  electrons_per_unit_ms: [150.0, 600.0]   # [calib] photo-electrons per unit rendered radiance per ms (day sky ~10 units)
+  read_noise_e: [1.5, 6.0]             # [C]
+  full_well_e: [6000.0, 20000.0]       # [C]
+  bits: 12                             # [C]
+  ae_target: [0.10, 0.22]              # [C] auto-exposure: frame median maps here in linear raw units
+  # Exposure time is fixed per scene (it also sets the rendered motion blur); auto-exposure meets
+  # ae_target with aperture / ND when there is too much light and with gain when there is too little.
+  max_gain: 64.0                       # [C] analogue + digital gain limit (sets how noisy night frames get)
+  gamma: 2.2
+  nominal: {electrons_per_unit_ms: 300.0, read_noise_e: 3.0, full_well_e: 12000.0, ae_target: 0.16}   # metadata contrast-to-noise
+
+lwir_noise:                            # He et al. (Applied Optics 2018) style: column FPN + Gaussian noise
+  netd_mk: [30.0, 80.0]                # [spec]
+  counts_per_k: [20.0, 80.0]           # [C] 14-bit responsivity near ambient
+  offset_counts: [3000.0, 9000.0]      # [C]
+  column_fpn_k: [0.02, 0.15]           # [C] column offset sigma, kelvin-equivalent
+  pixel_fpn_k: [0.0, 0.04]             # [C] residual pixel non-uniformity sigma, kelvin-equivalent
+  bits: 14                             # [spec]
+  agc_low_pct: [0.5, 2.0]              # [C] display stretch: robust minimum percentile
+  agc_high_pct: [99.0, 99.9]           # [C] robust maximum percentile
+  nominal: {netd_mk: 50.0, column_fpn_k: 0.05}
+
+swir_noise:                            # Jiang, Wang, Zheng (ICCVW 2025) style: shot, dark current, read, row/column FPN, PRNU, bad pixels
+  electrons_per_unit_ms: [1500.0, 8000.0]  # [calib] per unit rendered SWIR radiance per ms; ~15 um InGaAs pixels
+                                       # collect ~25x the light of ~3 um CMOS pixels (QE ~0.8), hence >> RGB
+  dark_current_e_per_ms: [0.5, 20.0]   # [C] uncooled / TEC-stabilised InGaAs range
+  read_noise_e: [20.0, 120.0]          # [C]
+  full_well_e: [30000.0, 400000.0]     # [C] high- to low-gain modes
+  ae_target: [0.15, 0.35]              # [C] same aperture / ND then gain logic as RGB
+  column_fpn_frac: [0.001, 0.01]       # [C] of the frame mean
+  row_fpn_frac: [0.0, 0.005]           # [C]
+  prnu_frac: [0.003, 0.02]             # [C] per-pixel gain non-uniformity
+  bad_pixel_frac: [0.0, 0.0008]        # [C]
+  bits: 14
+  max_gain: 16.0
+  agc_low_pct: [0.5, 2.0]
+  agc_high_pct: [99.0, 99.9]
+  nominal: {electrons_per_unit_ms: 4000.0, read_noise_e: 50.0, dark_current_e_per_ms: 5.0, full_well_e: 100000.0, ae_target: 0.25}

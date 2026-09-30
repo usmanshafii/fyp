@@ -1,0 +1,634 @@
+{
+ "scene_id": "s000004",
+ "split": "train",
+ "seed": 4,
+ "camera": {
+  "hfov_deg": 50.0,
+  "width": 640,
+  "height": 512,
+  "f_px": 686.2422145630587,
+  "supersample": 2,
+  "supersample_background": 2,
+  "exposure_ms": 19.71923296798476
+ },
+ "target": {
+  "variant": {
+   "seed": 4,
+   "variant_index": 4,
+   "variant_seed": 20260924,
+   "span_m": 2.53903556815972,
+   "root_chord": 1.1038230243600935,
+   "tip_over_root": 0.1320513415737592,
+   "nose_over_root": 0.2807431161695261,
+   "sweep_deg": 62.440527124959445,
+   "forebody_dia": 0.14000281081263527,
+   "fin_up_height": 0.15715645894680982,
+   "fin_down_height": 0.13887093433812342,
+   "prop_dia": 0.2939363857493916,
+   "length_m": 3.9239367205805267,
+   "params_file": "params/s000004.json"
+  },
+  "yaw_deg": 114.27320029346768,
+  "pitch_deg": 0.0,
+  "roll_deg": 0.0,
+  "range_m": 94.21295373920547,
+  "elevation_deg": 20.15625891965823,
+  "airspeed_mps": 40.80771310310111,
+  "wind_mps": 8.957345581168315,
+  "projected_size_m": {
+   "w": 3.4055341474192975,
+   "h": 0.8560432348847429
+  },
+  "bbox_px": {
+   "x": 600.7195887061753,
+   "y": 18.400440253307806,
+   "w": 35.73253192215611,
+   "h": 15.403141191940591
+  },
+  "size_bin": "32-64"
+ },
+ "conditions": {
+  "lighting": "dusk",
+  "weather": "clear",
+  "visibility_km": 41.929081858150084,
+  "background": "horizon_clutter",
+  "thermal_state": "crossover",
+  "air_temp_c": 18.780663883184864,
+  "warm_clutter": false,
+  "clouds": false
+ },
+ "modalities": {
+  "rgb": {
+   "path": "rgb/s000004.exr",
+   "png": "rgb/s000004.png",
+   "layers": "layers/rgb/s000004.npz",
+   "cnr": -7.111485656923673,
+   "target_mean": 2.296517848968506,
+   "background_mean": 2.742689371109009,
+   "noise_sigma": 0.0627395657764021
+  },
+  "lwir": {
+   "path": "lwir/s000004.exr",
+   "png": "lwir/s000004.png",
+   "layers": "layers/lwir/s000004.npz",
+   "cnr": 134.460428778141,
+   "target_mean": 30.88675880432129,
+   "background_mean": 23.503334045410156,
+   "noise_sigma": 0.054911506872358296
+  },
+  "swir": {
+   "path": "swir/s000004.exr",
+   "png": "swir/s000004.png",
+   "layers": "layers/swir/s000004.npz",
+   "cnr": 329.80596553913017,
+   "target_mean": 0.44065865874290466,
+   "background_mean": 0.06784491240978241,
+   "noise_sigma": 0.0011304032834084361
+  }
+ },
+ "negatives": [],
+ "extra": {
+  "objects": [
+   {
+    "name": "target",
+    "cls": "target",
+    "class_id": 0,
+    "position": [
+     -1.2396337057563374,
+     88.43432151122502,
+     34.91308124557539
+    ],
+    "matrix_world": [
+     [
+      0.911595659937386,
+      0.4110880109943876,
+      0.0,
+      -1.2396337057563374
+     ],
+     [
+      -0.4110880109943876,
+      0.911595659937386,
+      0.0,
+      88.43432151122502
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      34.91308124557539
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "velocity_mps": [
+     32.594423031102984,
+     -9.09301874681109,
+     0.0
+    ],
+    "range_m": 94.21295373920547,
+    "ray_azimuth_deg": 359.1969053777357,
+    "elevation_deg": 20.15625891965823,
+    "altitude_m": 34.91308124557539,
+    "agl_m": 34.91308124557539,
+    "bbox_px": {
+     "x": 600.7195887061753,
+     "y": 18.400440253307806,
+     "w": 35.73253192215611,
+     "h": 15.403141191940591
+    },
+    "bbox_blur_px": {
+     "x": 597.8937777342774,
+     "y": 17.662975436220876,
+     "w": 41.56408302224543,
+     "h": 16.80588379269156
+    },
+    "size_px": 35.73253192215611,
+    "size_bin": "32-64",
+    "crop_px": [
+     591,
+     11,
+     640,
+     41
+    ],
+    "supersample": 2,
+    "pose": {
+     "heading_deg": 114.27320029346768,
+     "pitch_deg": 0.0,
+     "roll_deg": 0.0
+    },
+    "aspect_deg": 66.55502599916159,
+    "aspect_azimuth_deg": -64.92370508426801,
+    "aspect_elevation_deg": -20.15625891965823,
+    "airspeed_mps": 40.80771310310111,
+    "wind_mps": 8.957345581168315,
+    "wind_dir_deg": 329.05716638198743,
+    "projected_size_m": {
+     "w": 3.4055341474192975,
+     "h": 0.8560432348847429
+    },
+    "hot_visible_cm2": {
+     "exhaust": 127.4642359500551,
+     "engine": 497.0214437561917
+    }
+   }
+  ],
+  "camera": {
+   "hfov_deg": 50.0,
+   "width": 640,
+   "height": 512,
+   "f_px": 686.2422145630587,
+   "sensor_width_mm": 36.0,
+   "focal_mm": 38.60112456917206,
+   "position": [
+    0.0,
+    0.0,
+    2.449028211634804
+   ],
+   "azimuth_deg": 335.1954660144717,
+   "elevation_deg": 3.255588769073422,
+   "roll_deg": 0.0,
+   "vfov_deg": 40.915670839718985,
+   "exposure_ms": 19.71923296798476,
+   "supersample_background": 2,
+   "matrix_world": [
+    [
+     0.9077442831992292,
+     0.02382483571300698,
+     0.41884686165992197,
+     0.0
+    ],
+    [
+     0.4195239162659473,
+     -0.051550954732538005,
+     -0.9062793072486243,
+     0.0
+    ],
+    [
+     0.0,
+     0.9983861358559684,
+     -0.056790172834637116,
+     2.449028211634804
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  "sun": {
+   "elevation_deg": 12.829909153325982,
+   "azimuth_deg": 203.32031850474752,
+   "near_line_of_sight": false
+  },
+  "moon": null,
+  "atmosphere": {
+   "air": 1.1403714668423108,
+   "dust": 1.1712806649126404,
+   "ozone": 1.980059525697174
+  },
+  "clouds": null,
+  "weather": {
+   "kind": "clear",
+   "visibility_km": 41.929081858150084,
+   "band_ratio": {
+    "rgb": 1.0,
+    "lwir": 0.26728032823137887,
+    "swir": 0.6064379838300078
+   },
+   "aerosol_scale_height_m": 1500.0
+  },
+  "psf": {
+   "rgb": {
+    "sigma0": 0.3,
+    "nominal": 0.4982888050264893
+   },
+   "lwir": {
+    "sigma0": 0.4,
+    "nominal": 0.7747530644241569
+   },
+   "swir": {
+    "sigma0": 0.4,
+    "nominal": 0.5243469374029702
+   }
+  },
+  "family": "horizon",
+  "swir_hot_emission": false,
+  "signatures": {
+   "target": {
+    "rgb": {
+     "skin": {
+      "albedo": 0.07252152899782613,
+      "roughness": 0.5506705919522823,
+      "coat": 0.35822130448951506,
+      "group": "paint"
+     },
+     "control_surface": {
+      "albedo": 0.07252152899782613,
+      "roughness": 0.5506705919522823,
+      "coat": 0.35822130448951506,
+      "group": "paint"
+     },
+     "fin": {
+      "albedo": 0.07252152899782613,
+      "roughness": 0.5506705919522823,
+      "coat": 0.35822130448951506,
+      "group": "paint"
+     },
+     "fuselage": {
+      "albedo": 0.07252152899782613,
+      "roughness": 0.5506705919522823,
+      "coat": 0.35822130448951506,
+      "group": "paint"
+     },
+     "tail_cone": {
+      "albedo": 0.07252152899782613,
+      "roughness": 0.5506705919522823,
+      "coat": 0.35822130448951506,
+      "group": "paint"
+     },
+     "markings": {
+      "albedo": 0.7182094187073291,
+      "roughness": 0.5573158940120262,
+      "group": "white"
+     },
+     "decal": {
+      "albedo": 0.7182094187073291,
+      "roughness": 0.5573158940120262,
+      "group": "white"
+     },
+     "engine_region": {
+      "albedo": 0.4339250719397164,
+      "roughness": 0.32056005205423915,
+      "metallic": 0.831774330310108,
+      "group": "engine"
+     },
+     "exhaust_outlet": {
+      "albedo": 0.06909623613366932,
+      "roughness": 0.5271696930072095,
+      "metallic": 0.602537326747881,
+      "group": "exhaust"
+     },
+     "propeller": {
+      "albedo": 0.042784445903024666,
+      "roughness": 0.5676088072131555,
+      "group": "dark"
+     },
+     "propeller_disc": {
+      "albedo": 0.042784445903024666,
+      "roughness": 0.5676088072131555,
+      "group": "dark",
+      "alpha": 0.21516783392274563
+     },
+     "antenna": {
+      "albedo": 0.042784445903024666,
+      "roughness": 0.5676088072131555,
+      "group": "dark"
+     },
+     "nose_window": {
+      "albedo": 0.024448000151167888,
+      "roughness": 0.03153592488564448,
+      "group": "window"
+     }
+    },
+    "lwir": {
+     "skin": {
+      "dT": -0.2809551857046654,
+      "emissivity": 0.89567814306882,
+      "group": "skin"
+     },
+     "control_surface": {
+      "dT": -0.2809551857046654,
+      "emissivity": 0.89567814306882,
+      "group": "skin"
+     },
+     "fin": {
+      "dT": -0.2809551857046654,
+      "emissivity": 0.89567814306882,
+      "group": "skin"
+     },
+     "fuselage": {
+      "dT": -0.2809551857046654,
+      "emissivity": 0.89567814306882,
+      "group": "skin"
+     },
+     "markings": {
+      "dT": -0.2809551857046654,
+      "emissivity": 0.89567814306882,
+      "group": "skin"
+     },
+     "decal": {
+      "dT": -0.2809551857046654,
+      "emissivity": 0.89567814306882,
+      "group": "skin"
+     },
+     "antenna": {
+      "dT": -0.2809551857046654,
+      "emissivity": 0.89567814306882,
+      "group": "skin"
+     },
+     "nose_window": {
+      "dT": -0.2809551857046654,
+      "emissivity": 0.89567814306882,
+      "group": "skin"
+     },
+     "tail_cone": {
+      "dT": 8.526844080901064,
+      "emissivity": 0.943749848057378,
+      "group": "tail_cone"
+     },
+     "engine_region": {
+      "dT": 94.76140279671269,
+      "emissivity": 0.7869725009454025,
+      "group": "engine"
+     },
+     "exhaust_outlet": {
+      "dT": 348.906003274251,
+      "emissivity": 0.4975987669633458,
+      "group": "exhaust"
+     },
+     "propeller": {
+      "dT": 4.201144705439568,
+      "emissivity": 0.90885698400465,
+      "group": "propeller"
+     },
+     "propeller_disc": {
+      "dT": 4.201144705439568,
+      "emissivity": 0.90885698400465,
+      "group": "propeller"
+     }
+    },
+    "swir": {
+     "skin": {
+      "reflectance": 0.09261443603537839,
+      "roughness": 0.5950980578289795,
+      "coat": 0.09461249615885631,
+      "group": "paint",
+      "emit_dT": 0.4354320131053312
+     },
+     "control_surface": {
+      "reflectance": 0.09261443603537839,
+      "roughness": 0.5950980578289795,
+      "coat": 0.09461249615885631,
+      "group": "paint",
+      "emit_dT": 0.4354320131053312
+     },
+     "fin": {
+      "reflectance": 0.09261443603537839,
+      "roughness": 0.5950980578289795,
+      "coat": 0.09461249615885631,
+      "group": "paint",
+      "emit_dT": 0.4354320131053312
+     },
+     "fuselage": {
+      "reflectance": 0.09261443603537839,
+      "roughness": 0.5950980578289795,
+      "coat": 0.09461249615885631,
+      "group": "paint",
+      "emit_dT": 0.4354320131053312
+     },
+     "tail_cone": {
+      "reflectance": 0.09261443603537839,
+      "roughness": 0.5950980578289795,
+      "coat": 0.09461249615885631,
+      "group": "paint",
+      "emit_dT": 7.576999333419847
+     },
+     "markings": {
+      "reflectance": 0.6414534703957552,
+      "roughness": 0.5904987114375108,
+      "group": "white",
+      "emit_dT": 0.4354320131053312
+     },
+     "decal": {
+      "reflectance": 0.6414534703957552,
+      "roughness": 0.5904987114375108,
+      "group": "white",
+      "emit_dT": 0.4354320131053312
+     },
+     "engine_region": {
+      "reflectance": 0.514642747988916,
+      "roughness": 0.3622062875119141,
+      "metallic": 0.8478831102838275,
+      "group": "engine",
+      "emit_dT": 95.33815291835124
+     },
+     "exhaust_outlet": {
+      "reflectance": 0.4472101787165285,
+      "roughness": 0.7639646869675362,
+      "metallic": 0.3769216971327829,
+      "group": "exhaust",
+      "emit_dT": 306.9461649493031
+     },
+     "propeller": {
+      "reflectance": 0.09326814270212674,
+      "roughness": 0.5665119178209668,
+      "group": "dark",
+      "emit_dT": 4.139927258548878
+     },
+     "propeller_disc": {
+      "reflectance": 0.09326814270212674,
+      "roughness": 0.5665119178209668,
+      "group": "dark",
+      "alpha": 0.21516783392274563,
+      "emit_dT": 4.139927258548878
+     },
+     "antenna": {
+      "reflectance": 0.09326814270212674,
+      "roughness": 0.5665119178209668,
+      "group": "dark",
+      "emit_dT": 0.4354320131053312
+     },
+     "nose_window": {
+      "reflectance": 0.0490386216369962,
+      "roughness": 0.09101782329892091,
+      "group": "window",
+      "emit_dT": 0.4354320131053312
+     }
+    }
+   },
+   "negatives": [],
+   "environment": {
+    "rgb": {
+     "ground": {
+      "albedo": 0.3163205606716938,
+      "roughness": 0.9,
+      "color": [
+       1.1660700066752698,
+       1.0488441196103735,
+       0.7850858737143568
+      ]
+     },
+     "wall": {
+      "albedo": 0.4878019801599155,
+      "roughness": 0.7846972517674287
+     },
+     "roof": {
+      "albedo": 0.35132267543569584,
+      "roughness": 0.6575874608991888
+     }
+    },
+    "lwir": {
+     "sky": {
+      "dT_horizon": -4.137799844572848,
+      "dT_zenith": -48.80532086794654,
+      "shape_deg": 12.40702088932025
+     },
+     "clouds": {
+      "dT": -2.4608458226980936
+     },
+     "ground": {
+      "dT": 3.730776871354795,
+      "emissivity": 0.9419492711942287,
+      "texture_dT": 2.939029183686184
+     },
+     "wall": {
+      "dT": 3.547342314011366,
+      "emissivity": 0.9047182455110443
+     },
+     "roof": {
+      "dT": 0.2493580876997421,
+      "emissivity": 0.8977988301314501
+     }
+    },
+    "swir": {
+     "ground": {
+      "reflectance": 0.3491645548665981
+     },
+     "wall": {
+      "reflectance": 0.43332464791186
+     },
+     "roof": {
+      "reflectance": 0.1592779426332773
+     },
+     "cloud_brightness": 0.6934884105404259,
+     "cloud_brightness_scale": 1.0404272933802787,
+     "sky_divisor": 26.724585866963935,
+     "night_airglow": 0.00017374619337687797
+    }
+   }
+  },
+  "terrain": {
+   "hill_amplitude_m": 46.867055329048256,
+   "hill_wavelength_m": 3620.464603498388,
+   "edge_ridge_m": 89.52912499288465,
+   "grid": 160,
+   "size_m": 20000.0
+  },
+  "structures": [
+   {
+    "kind": "mast",
+    "cx": 14.74413652099516,
+    "cy": 790.7661174577814,
+    "z0": 27.56440364372167,
+    "w": 0.8181547779509292,
+    "d": 0.8181547779509292,
+    "h": 32.75978497223374,
+    "yaw": 0.0
+   },
+   {
+    "kind": "mast",
+    "cx": -329.2938846233328,
+    "cy": 433.5502993714783,
+    "z0": 25.678841174335908,
+    "w": 0.6180344231285702,
+    "d": 0.6180344231285702,
+    "h": 58.931702229618494,
+    "yaw": 0.0
+   }
+  ],
+  "resample": {
+   "attempt": 2,
+   "forced": {}
+  },
+  "ground_texture": {
+   "rgb": {
+    "scale_m": 23.88905613427294,
+    "contrast": 0.28590160298785106,
+    "seed": 35.47672734178045
+   },
+   "lwir": {
+    "scale_m": 39.48705717732383,
+    "contrast": 0.16793771952925873,
+    "seed": 38.74362224418587
+   },
+   "swir": {
+    "scale_m": 14.560147625947854,
+    "contrast": 0.12315341469987354,
+    "seed": 52.41805675180823
+   }
+  },
+  "sun_calibration": {
+   "sun": {
+    "sun_irradiance": [
+     109.68768104836332,
+     74.49708219792183,
+     34.883904746173535
+    ],
+    "plane_disc": [
+     9.235391616821289,
+     7.233585357666016,
+     5.091866493225098
+    ],
+    "plane_sky": [
+     1.4823262691497803,
+     1.9679006338119507,
+     2.626163959503174
+    ],
+    "elevation_deg": 12.829909153325982
+   }
+  },
+  "timings_s": {
+   "calibration": 2.8509416580200195,
+   "build": 0.8340954780578613,
+   "rgb": 295.1540775299072,
+   "lwir": 10.671103239059448,
+   "swir": 79.172203540802
+  }
+ }
+}

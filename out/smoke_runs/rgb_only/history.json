@@ -1,0 +1,7 @@
+[
+ {
+  "epoch": 0,
+  "iters": 3,
+  "val_ap50_target": 0.0
+ }
+]

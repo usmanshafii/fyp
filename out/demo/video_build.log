@@ -1,0 +1,11 @@
+[day] 200/200 frames detected, median score 148.8 sigma -> out/demo/video\kal_demo_day.mp4
+[dusk] 200/200 frames detected, median score 148.1 sigma -> out/demo/video\kal_demo_dusk.mp4
+[night] 200/200 frames detected, median score 148.0 sigma -> out/demo/video\kal_demo_night.mp4
+Traceback (most recent call last):
+  File "C:\Users\usman_pyywgw5\Downloads\fyp\tools\demo_video.py", line 304, in <module>
+    main()
+  File "C:\Users\usman_pyywgw5\Downloads\fyp\tools\demo_video.py", line 294, in main
+    subprocess.run(["ffmpeg", "-y", "-f", "concat", "-i", lst, "-c", "copy", full], cwd=out,
+  File "C:\Program Files\Python311\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['ffmpeg', '-y', '-f', 'concat', '-i', 'out/demo/video\\concat.txt', '-c', 'copy', 'out/demo/video\\kal_detection_demo.mp4']' returned non-zero exit status 1.
